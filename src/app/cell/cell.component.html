@@ -1,1 +1,7 @@
-<p>cell works!</p>
+<div class="row">
+    <button 
+      *ngFor="let cell of cells; let col = index" 
+      (click)="onCellClick(col)">
+      {{ cell || '-' }}
+    </button>
+  </div>
