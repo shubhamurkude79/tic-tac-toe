@@ -3,6 +3,12 @@
         *ngFor="let row of board; let rowIndex = index"
         [row]="rowIndex"
         [cells]="row"
-        
+        (cellClick)="makeMove($event.row, $event.col)"
     ></app-cell>
 </div>
+
+<div *ngIf="winner" class="status">
+    {{ winner === 'Draw' ? 'Game Draw' : 'Winner: ' + winner }}
+</div>
+
+<button (click)="newGame()">New Game</button>
