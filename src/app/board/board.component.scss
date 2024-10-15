@@ -1,5 +1,61 @@
 .board {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(3, 100px);
-    gap: 10px;
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+  }
+
+  .cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border: 1px solid #000;
+    position: relative;
+  }
+
+  .winning-line {
+    position: absolute;
+    background-color: red;
+    height: 5px;
+    width: 0;
+    transition: width 0.5s ease-in-out;
+  }
+
+  .horizontal-line {
+    width: 300px;
+    top: 50%;
+    left: 0;
+  }
+
+  .vertical-line {
+    height: 300px;
+    width: 5px;
+    left: 50%;
+  }
+  
+  .diagonal-line {
+    width: 300px;
+    height: 5px;
+  }
+
+  .diagonal-line-left {
+    transform: rotate(45deg);
+    top: 50px;
+    left: 0;
+  }
+  
+  .diagonal-line-right {
+    transform: rotate(-45deg);
+    top: 50px;
+    right: 0;
+  }
+
+  .status {
+    margin-top: 20px;
+    font-size: 1.5em;
+    color: green;
   }
