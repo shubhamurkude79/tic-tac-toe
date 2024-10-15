@@ -14,6 +14,7 @@ export class BoardComponent {
   currentPlayer!: string;
   winner!: string | null;
   moveCount!: number;
+  winningCells: number[][] | null = null;  // To track winning cells
 
   constructor(){
     this.newGame();
@@ -56,9 +57,45 @@ export class BoardComponent {
       [[0, 2], [1, 1], [2, 0]],
     ];
 
-    return winPatterns.some(pattern => 
-      pattern.every(([r, c]) => this.board[r][c] === this.currentPlayer)
-    );
+    for (const pattern of winPatterns) {
+      const [a, b, c] = pattern;
+      if (
+        this.board[a[0]][a[1]] &&
+        this.board[a[0]][a[1]] === this.board[b[0]][b[1]] &&
+        this.board[a[0]][a[1]] === this.board[c[0]][c[1]]
+      ) {
+        this.winningCells = pattern;  // Store the winning pattern
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  isWinningCell(row: number, col: number): boolean {
+    return this.winningCells?.some(([r, c]) => r === row && c === col) ?? false;
+  }
+  
+  isHorizontalWin(): boolean {
+    return this.winningCells?.[0][0] === this.winningCells?.[1][0] &&
+           this.winningCells?.[1][0] === this.winningCells?.[2][0];
+  }
+  
+  isVerticalWin(): boolean {
+    return this.winningCells?.[0][1] === this.winningCells?.[1][1] &&
+           this.winningCells?.[1][1] === this.winningCells?.[2][1];
+  }
+  
+  isDiagonalLeftWin(): boolean {
+    return this.winningCells?.[0][0] === 0 &&
+           this.winningCells?.[1][1] === 1 &&
+           this.winningCells?.[2][2] === 2;
+  }
+  
+  isDiagonalRightWin(): boolean {
+    return this.winningCells?.[0][0] === 0 &&
+           this.winningCells?.[1][1] === 1 &&
+           this.winningCells?.[2][0] === 2;
   }
 
 }

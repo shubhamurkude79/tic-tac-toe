@@ -1,11 +1,33 @@
 <div class="board">
-    <app-cell
-        *ngFor="let row of board; let rowIndex = index"
-        [row]="rowIndex"
-        [cells]="row"
-        (cellClick)="makeMove($event.row, $event.col)"
-    ></app-cell>
-</div>
+    <div 
+      *ngFor="let row of board; let rowIndex = index" 
+      class="row">
+      <div 
+        *ngFor="let cell of row; let colIndex = index" 
+        class="cell"
+        [ngClass]="{'winning-cell': isWinningCell(rowIndex, colIndex)}"
+        (click)="makeMove(rowIndex, colIndex)">
+        {{ cell || '-' }}
+      </div>
+    </div>
+  
+    <!-- Horizontal Winning Line -->
+    <div *ngIf="winner && winningCells && isHorizontalWin()" 
+         class="winning-line horizontal-line"></div>
+  
+    <!-- Vertical Winning Line -->
+    <div *ngIf="winner && winningCells && isVerticalWin()" 
+         class="winning-line vertical-line"></div>
+  
+    <!-- Diagonal Winning Line -->
+    <div *ngIf="winner && winningCells && isDiagonalLeftWin()" 
+         class="winning-line diagonal-line diagonal-line-left"></div>
+  
+    <div *ngIf="winner && winningCells && isDiagonalRightWin()" 
+         class="winning-line diagonal-line diagonal-line-right"></div>
+  </div>
+  
+  
 
 <div *ngIf="winner" class="status">
     {{ winner === 'Draw' ? 'Game Draw' : 'Winner: ' + winner }}
